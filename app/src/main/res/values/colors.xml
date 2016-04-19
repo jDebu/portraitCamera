@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="celeste_oscuro">#48BFDF</color>
+    <color name="celeste_claro">#99D4EB</color>
+
+    <color name="celeste">#5bc2e7</color>
+    <color name="rojo">#ee2737</color>
+
+    <color name="azul">#007cf0</color>
+    <color name="azul_pressed">#5d93ca</color>
+
+    <color name="rosado">#fb637e</color>
+    <color name="verde">#48C448</color>
+
+    <color name="blanco">#FFFFFF</color>
+    <color name="blanco_circle_off">#cccccc</color>
+
+    <color name="text_talla_off">#666666</color>
+
+    <color name="negro">#000000</color>
+
+    <!-- Colores Botones Redes Sociales -->
+
+    <color name="facebook_off">#3b5998</color>
+    <color name="facebook_on">#8b9dc3</color>
+
+    <color name="twitter_off">#00aced</color>
+    <color name="twitter_on">#b2e6f9</color>
+
+    <color name="instagram_off">#125688</color>
+    <color name="instagram_on">#88aac3</color>
+
+    <color name="gris">#c2c2c2</color>
+    <color name="text_gris">#8f8f8f</color>
+    <color name="gris_nuevo">#b1b1b1</color>
+
+    <color name="fondo_slide_probador">#eaeaea</color>
+    <color name="text_marca">#4d4d4d</color>
+    <color name="text_modelo">#858585</color>
+</resources>
