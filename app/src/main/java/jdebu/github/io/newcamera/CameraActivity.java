@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import jdebu.github.io.newcamera.wrapper.WrapCamera;
 import jdebu.github.io.newcamera.wrapper.WrapSelectPrenda;
 
 /**
@@ -22,12 +23,12 @@ public class CameraActivity extends AppCompatActivity{
         super.onCreate(savedInstance);
         setContentView(R.layout.activity);
 
-        /*WrapSelectPrenda wrapSelectPrenda=new WrapSelectPrenda(this);
-        Bundle args = new Bundle();
-        args.putSerializable("wrapSelectPrenda", wrapSelectPrenda);
-        cameraFragment.setArguments(args);
-        cameraFragment.setRetainInstance(true);*/
+        //WrapCamera wrapCamera=new WrapCamera(this);
+        //Bundle args = new Bundle();
+        //args.putSerializable("wrapCamera", wrapCamera);
         CameraFragment cameraFragment=new CameraFragment();
+        //cameraFragment.setArguments(args);
+        //cameraFragment.setRetainInstance(true);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.todo,cameraFragment, cameraFragment.getClass().getSimpleName())
                 .commit();

@@ -31,6 +31,7 @@ class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     public Camera camera;
     private Camera.Size mSurfaceSize;
     private Camera.Size mPictureSize;
+    private Bitmap source;
 
 
     CameraPreview(Context context, CameraFragment cameraFragment) {
@@ -239,7 +240,7 @@ class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
                 Log.wtf("results",length+" "+rid);*/
 
                 //tmp=Bitmap.createScaledBitmap(tmp,1920,1440,true);
-                Bitmap source = Bitmap.createBitmap(tmp,
+                source = Bitmap.createBitmap(tmp,
                         0,
                         0,
                         options.outWidth,
@@ -247,6 +248,7 @@ class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
                         matrix, true);
 
                 tmp.recycle();
+
                 savePhoto(source);
 
             }

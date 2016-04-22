@@ -26,7 +26,6 @@ public class WrapSelectPrenda implements Serializable {
         layout= (RelativeLayout) findViewById(fragment,"select_prenda");
         title = (TextView) findViewById(fragment,"titulo_select_prenda");
         btnBack= (ImageView) findViewById(fragment,"atras_camara2");
-        Log.e("backk",btnBack+"");
         wearTop = (LinearLayout) findViewById(fragment,"frame_select_superior");
         wearBot = (LinearLayout) findViewById(fragment,"frame_select_medio");
     }

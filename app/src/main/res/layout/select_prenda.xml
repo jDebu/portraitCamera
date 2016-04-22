@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:visibility="visible"
+    android:visibility="gone"
     android:id="@+id/select_prenda"
     android:alpha="0.9"
     android:background="@color/negro"

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:alpha="1"
+    android:background="@color/negro"
+    android:elevation="10dp"
+    android:visibility="gone"
+    android:id="@+id/layout"
+    android:layout_centerInParent="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/frameOkCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2">
+        <RelativeLayout
+            android:id="@+id/frameCancel"
+            android:layout_gravity="left|center_vertical"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/checkCancelar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginLeft="20dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="9dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/cancelar_photo" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/frameOk"
+            android:layout_gravity="right|center_vertical"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/checkOk"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@android:color/transparent"
+                android:layout_alignParentRight="true"
+                android:layout_margin="14dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:src="@drawable/listo_photo" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_below="@+id/frameOkCancel"
+        android:layout_centerInParent="true"
+        android:id="@+id/previewPhoto"
+        android:layout_width="356dp"
+        android:layout_height="475dp" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_below="@+id/previewPhoto"
+        android:text="FRONTAL"
+        android:id="@+id/txtPie"
+        android:textColor="@color/celeste"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

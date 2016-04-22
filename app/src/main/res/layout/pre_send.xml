@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:alpha="1"
+    android:background="@color/negro"
+    android:elevation="10dp"
+    android:layout_centerInParent="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone"
+    android:id="@+id/layout_send">
+    <ImageView
+        android:id="@+id/atras"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="left|center_vertical"
+        android:background="@android:color/transparent"
+        android:layout_margin="14dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp"
+        android:src="@drawable/atras_icon" />
+    <LinearLayout
+        android:id="@+id/framePreviews"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/atras"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/textFrontal"
+                android:textColor="@color/blanco"
+                android:text="FRONTAL"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/previewFrontal"
+                android:layout_below="@+id/textFrontal"
+                android:layout_width="210dp"
+                android:layout_height="280dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/textPosterior"
+                android:textColor="@color/blanco"
+                android:text="POSTERIOR"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/previewPosterior"
+                android:layout_below="@+id/textPosterior"
+                android:layout_width="210dp"
+                android:layout_height="280dp" />
+        </RelativeLayout>
+    </LinearLayout>
+    <Button
+        android:layout_marginTop="50dp"
+        android:visibility="visible"
+        android:id="@+id/btnEnviarPrenda"
+        android:textAllCaps="false"
+        android:text="Enviar Prenda"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/framePreviews"
+        android:layout_width="220dp"
+        android:layout_height="30dp"
+        android:shadowColor="@color/azul"
+        android:background="@drawable/button_selector"
+        android:textColor="@color/celeste"
+        />
+</RelativeLayout>

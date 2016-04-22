@@ -1,30 +1,36 @@
 package jdebu.github.io.newcamera;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
+import jdebu.github.io.newcamera.wrapper.WrapCamera;
+import jdebu.github.io.newcamera.wrapper.WrapPreApproval;
+import jdebu.github.io.newcamera.wrapper.WrapPreSend;
 import jdebu.github.io.newcamera.wrapper.WrapSelectPrenda;
 
 /**
  * Created by Jose on 13/04/16.
  */
 public class CameraFragment extends FullscreenFragment{
-    private ImageView imagea,imageb;
     private int contador;
     private WrapSelectPrenda wrapSelectPrenda;
+    private WrapCamera wrapCamera;
+    private WrapPreApproval wrapPreApproval;
+    private CameraPreview.SuccessSavePhoto successSavePhoto;
+    private WrapPreSend wrapPreSend;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,27 +43,49 @@ public class CameraFragment extends FullscreenFragment{
     @Override
     public void onActivityCreated(Bundle savedInstance) {
         super.onActivityCreated(savedInstance);
-        //wrapSelectPrenda = new WrapSelectPrenda(this);
+        initWraps();
         CameraPreview preview=new CameraPreview(getActivity(),this);
-        FrameLayout frameLayout=(FrameLayout) getView().findViewById(R.id.preview);
-        frameLayout.addView(preview);
-        ImageButton take=(ImageButton)getView().findViewById(R.id.take);
-        imagea = (ImageView) getView().findViewById(R.id.imagea);
-        imageb = (ImageView) getView().findViewById(R.id.imageb);
+        wrapCamera.getLayoutPreview().addView(preview);
         contador=1;
-        take.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("clic", "event");
-                BusHolder.getInstance().post(new TakePhoto());
-            }
-        });
-        //wrapSelectPrenda.getLayout().bringToFront();
-        //clickEvents();
+        clickEvents();
+    }
 
+    private void initWraps() {
+        wrapCamera = new WrapCamera(this);
+        wrapSelectPrenda = new WrapSelectPrenda(this);
+        wrapPreApproval = new WrapPreApproval(this);
+        wrapPreSend = new WrapPreSend(this);
+        wrapSelectPrenda.getLayout().bringToFront();
+        this.setRetainInstance(true);
     }
 
     private void clickEvents() {
+        wrapCamera.getTake().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BusHolder.getInstance().post(new TakePhoto());
+            }
+        });
+        wrapCamera.getSend().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPreSend();
+
+            }
+        });
+        wrapCamera.getImagea().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showImage(v);
+            }
+        });
+        wrapCamera.getImageb().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showImage(v);
+            }
+        });
+
         wrapSelectPrenda.getBtnBack().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,31 +104,97 @@ public class CameraFragment extends FullscreenFragment{
                 wrapSelectPrenda.getLayout().setVisibility(View.GONE);
             }
         });
+        wrapPreApproval.getLayoutApprove().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (contador) {
+                    case 1:
+                        Picasso.with(getActivity())
+                                .load("file:" + successSavePhoto.result)
+                                .fit()
+                                .centerInside()
+                                .noFade()
+                                .into(wrapCamera.getImagea());
+                        contador = 2;
+                        wrapCamera.getImagea().setTag(successSavePhoto.result);
+                        wrapCamera.getImagea().setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
+                        Picasso.with(getActivity()).
+                                load("file:" + successSavePhoto.result)
+                                .fit()
+                                .centerInside()
+                                .noFade()
+                                .into(wrapCamera.getImageb());
+                        contador = 0;
+                        wrapCamera.getImageb().setTag(successSavePhoto.result);
+                        wrapCamera.getImageb().setVisibility(View.VISIBLE);
+
+                        wrapCamera.getTake().setVisibility(View.GONE);
+                        wrapCamera.getSend().setVisibility(View.VISIBLE);
+
+                        showPreSend();
+                        break;
+                }
+                wrapPreApproval.getLayout().setVisibility(View.GONE);
+            }
+        });
+        wrapPreApproval.getLayoutDisapprove().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wrapPreApproval.getLayout().setVisibility(View.GONE);
+            }
+        });
+        wrapPreSend.getBtnBack().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                wrapPreSend.getLayout().setVisibility(View.GONE);
+            }
+        });
+        wrapPreSend.getBtnSend().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                wrapPreSend.getLayout().setVisibility(View.GONE);
+            }
+        });
+
+    }
+
+    private void showPreSend() {
+        wrapPreSend.getLayout().setVisibility(View.VISIBLE);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap bitmapF = BitmapFactory.decodeFile(wrapCamera.getImagea().getTag().toString(), options);
+        Bitmap bitmapP = BitmapFactory.decodeFile(wrapCamera.getImageb().getTag().toString(), options);
+        wrapPreSend.getImgFront().setImageBitmap(bitmapF);
+        wrapPreSend.getImgBack().setImageBitmap(bitmapP);
+        wrapPreSend.getLayout().bringToFront();
+    }
+
+    private void showImage(View v) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.parse("file://" + v.getTag().toString()), "image/*");
+        startActivity(intent);
     }
 
 
     public class TakePhoto{}
     @Subscribe
     public void onSuccess(CameraPreview.SuccessSavePhoto successSavePhoto){
-        switch (contador){
-            case 1:
-                Picasso.with(getActivity())
-                        .load("file:" + successSavePhoto.result)
-                        .fit()
-                        .centerInside()
-                        .noFade()
-                        .into(imagea);
-                contador=2;
-                break;
-            case 2:
-                Picasso.with(getActivity()).
-                        load("file:" + successSavePhoto.result)
-                        .fit()
-                        .centerInside()
-                        .noFade()
-                        .into(imageb);
-                contador=0;
-                break;
-        }
+        //deberia eliminar de la memoria si no lo aprueba - mejora
+        //si no aprueba la foto no se deberia mostrar en la foto muestra imagea/imageb
+        wrapPreApproval.getLayout().setVisibility(View.VISIBLE);
+        this.successSavePhoto=successSavePhoto;
+        Picasso.with(getActivity())
+                .load("file:" + successSavePhoto.result)
+                .fit()
+                .centerInside()
+                .noFade()
+                .into(wrapPreApproval.getPhoto());
+        wrapPreApproval.getLayout().bringToFront();
     }
+
 }
